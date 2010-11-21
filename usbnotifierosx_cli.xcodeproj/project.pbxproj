@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6D5A23F01298DB8B004FFA6E /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D5A23EF1298DB8B004FFA6E /* IOKit.framework */; };
-		8DD76F9A0486AA7600D96B5E /* OSXNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB7796FE84155DC02AAC07 /* OSXNotifier.m */; settings = {ATTRIBUTES = (); }; };
+		8DD76F9A0486AA7600D96B5E /* usbnotifier_cli.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB7796FE84155DC02AAC07 /* usbnotifier_cli.m */; settings = {ATTRIBUTES = (); }; };
 		8DD76F9C0486AA7600D96B5E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB779EFE84155DC02AAC07 /* Foundation.framework */; };
 		8DD76F9F0486AA7600D96B5E /* OSXNotifier.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C6859EA3029092ED04C91782 /* OSXNotifier.1 */; };
 /* End PBXBuildFile section */
@@ -27,7 +27,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		08FB7796FE84155DC02AAC07 /* OSXNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSXNotifier.m; sourceTree = "<group>"; };
+		08FB7796FE84155DC02AAC07 /* usbnotifier_cli.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = usbnotifier_cli.m; sourceTree = "<group>"; };
 		08FB779EFE84155DC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32A70AAB03705E1F00C91783 /* usbnotifierosx_cli_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = usbnotifierosx_cli_Prefix.pch; sourceTree = "<group>"; };
 		6D5A23EF1298DB8B004FFA6E /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
@@ -63,7 +63,7 @@
 			isa = PBXGroup;
 			children = (
 				32A70AAB03705E1F00C91783 /* usbnotifierosx_cli_Prefix.pch */,
-				08FB7796FE84155DC02AAC07 /* OSXNotifier.m */,
+				08FB7796FE84155DC02AAC07 /* usbnotifier_cli.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -136,7 +136,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8DD76F9A0486AA7600D96B5E /* OSXNotifier.m in Sources */,
+				8DD76F9A0486AA7600D96B5E /* usbnotifier_cli.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
