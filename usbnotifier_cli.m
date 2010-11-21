@@ -63,7 +63,7 @@ int main (int argc, const char * argv[]) {
     //3) Setup your buffers (I'm making the assumption the input and output buffer sizes are 64 bytes):
     
 
-    IOHIDDeviceRegisterInputReportCallback(deviceRef, (uint8_t *)inputBuffer, bufferSize, MyInputCallback, NULL);
+    //IOHIDDeviceRegisterInputReportCallback(deviceRef, (uint8_t *)inputBuffer, bufferSize, MyInputCallback, NULL);
     
     //4) Send your message to the device (I'm assuming report ID 0):
     
@@ -82,7 +82,7 @@ int main (int argc, const char * argv[]) {
         }
     }else{
         outputBuffer[0] = color;
-        sendRet = IOHIDDeviceSetReport(deviceRef, kIOHIDReportTypeOutput, 0, (uint8_t *)outputBuffer, bufferSize);        
+        sendRet = IOHIDDeviceSetReport(deviceRef, kIOHIDReportTypeOutput, 0, (uint8_t *)outputBuffer, bufferSize);
     }
 
     //5) Enter main run loop (which will call MyInputCallback when data has come back from the device):
