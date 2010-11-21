@@ -5,11 +5,11 @@
 #define OFF 0x00
 #define BLUE 0x01
 #define RED 0x02
-#define GREEN 0x02
-#define LTBLUE 0x02
-#define PURPLE 0x02
-#define YELLOW 0x02
-#define WHITE 0x02
+#define GREEN 0x03
+#define LTBLUE 0x04
+#define PURPLE 0x05
+#define YELLOW 0x06
+#define WHITE 0x07
 
 void MyInputCallback(void *context, IOReturn result, void *sender, IOHIDReportType type, uint32_t reportID, uint8_t *report, CFIndex reportLength)
 {
