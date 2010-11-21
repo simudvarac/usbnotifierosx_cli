@@ -2,6 +2,15 @@
 #import <IOKit/hid/IOHIDLib.h>
 #include <stdlib.h>
 
+#define OFF 0x00
+#define BLUE 0x01
+#define RED 0x02
+#define GREEN 0x02
+#define LTBLUE 0x02
+#define PURPLE 0x02
+#define YELLOW 0x02
+#define WHITE 0x02
+
 void MyInputCallback(void *context, IOReturn result, void *sender, IOHIDReportType type, uint32_t reportID, uint8_t *report, CFIndex reportLength)
 {
     NSLog(@"MyInputCallback called");
@@ -10,18 +19,23 @@ void MyInputCallback(void *context, IOReturn result, void *sender, IOHIDReportTy
 
 int main (int argc, const char * argv[]) {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    IOReturn sendRet;
+    IOReturn ret;
     const long productId = 0x1320;
     const long vendorId = 0x1294;
     size_t bufferSize = 5;
     char *inputBuffer = malloc(bufferSize);
     char *outputBuffer = malloc(bufferSize);
-    int color = 0x00;
+    memset(outputBuffer, 0, bufferSize);
+    unsigned int color = 0x00;
+    unsigned int count = 0;
     
     //0) get color from command line
     if(argc > 1){
         color = atoi(argv[1]);
-    } else {
-        NSLog(@"Must be run with color argument");
+    }
+    if(argc > 2){
+        count = 2 * atoi(argv[2]);//since half the time we're off, double the number of blinks
     }
     
 
@@ -31,7 +45,7 @@ int main (int argc, const char * argv[]) {
                                                     kIOHIDOptionsTypeNone);
     IOHIDManagerScheduleWithRunLoop(managerRef, CFRunLoopGetMain(),
                                     kCFRunLoopDefaultMode);
-    IOReturn ret = IOHIDManagerOpen(managerRef, 0L);
+    ret = IOHIDManagerOpen(managerRef, 0L);
     
     //2) Get your device:
     
@@ -55,18 +69,21 @@ int main (int argc, const char * argv[]) {
     
     // populate output buffer
     // ....
-    outputBuffer[0] = color;
-    outputBuffer[1] = 0x04;
-    outputBuffer[2] = 0x04;
-    outputBuffer[3] = 0x04;
-    outputBuffer[4] = 0x04;
-    //outputBuffer[5] = 0x1;
-    //outputBuffer[6] = 0x1;
-    //outputBuffer[7] = 0x1;
-    
-    IOReturn sendRet = IOHIDDeviceSetReport(deviceRef, kIOHIDReportTypeOutput, 0, (uint8_t *)outputBuffer, bufferSize);
-
-
+   
+    if(count > 0){
+        for(int i = 0; i < count; i++){
+            if(i % 2 == 0){
+                outputBuffer[0] = color;
+            }else{
+                outputBuffer[0] = 0x00;
+            }
+            sendRet = IOHIDDeviceSetReport(deviceRef, kIOHIDReportTypeOutput, 0, (uint8_t *)outputBuffer, bufferSize);
+            [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
+        }
+    }else{
+        outputBuffer[0] = color;
+        sendRet = IOHIDDeviceSetReport(deviceRef, kIOHIDReportTypeOutput, 0, (uint8_t *)outputBuffer, bufferSize);        
+    }
 
     //5) Enter main run loop (which will call MyInputCallback when data has come back from the device):
     
