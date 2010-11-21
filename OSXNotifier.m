@@ -27,8 +27,8 @@ int main (int argc, const char * argv[]) {
     char *inputBuffer = malloc(bufferSize);
     char *outputBuffer = malloc(bufferSize);
     memset(outputBuffer, 0, bufferSize);
-    unsigned int color = 0x00;
-    unsigned int count = 0;
+    unsigned int color = 0x01;
+    unsigned int count = 10;
     
     //0) get color from command line
     if(argc > 1){
