@@ -1,2 +1,17 @@
 This is a simple utility to light up a "USB Mail Notifier" device.  I got mine from http://www.chinavasion.com/cool-gadgets/webmail-notifiermail/, but the packaging is exactly the same as http://www.dealextreme.com/details.dx/sku.27062 
 As seen in the deal extreme screenshot, the device is also known as "Webmail window"
+
+USE:
+on the command line/Terminal:
+./usbnotifierosx_cli <color_number> <blink time>
+is no parameters, it'll blink blue for 10seconds
+color numbers are:
+off: 0
+blue: 1
+red: 2
+green: 3
+light blue: 4
+purple: 5
+yellow-green: 6
+white: 7
+
