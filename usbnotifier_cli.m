@@ -61,27 +61,16 @@ int main (int argc, const char * argv[]) {
     IOHIDDeviceRef deviceRef = ([deviceRefs count]) ?
     (IOHIDDeviceRef)[deviceRefs objectAtIndex:0] : nil;
     
-    //3) Setup your buffers (I'm making the assumption the input and output buffer sizes are 64 bytes):
-    
-
-    //IOHIDDeviceRegisterInputReportCallback(deviceRef, (uint8_t *)inputBuffer, bufferSize, MyInputCallback, NULL);
-    
     //4) Send your message to the device (I'm assuming report ID 0):
-    
-    // populate output buffer
-    // ....
-   
+       
 	for (NSNumber *n in [pattern objectEnumerator]){
 		outputBuffer[0] = [n integerValue];
+		if (outputBuffer[0] > 7) continue; //Skip invalid values
 		sendRet = IOHIDDeviceSetReport(deviceRef, kIOHIDReportTypeOutput, 0, (uint8_t *)outputBuffer, bufferSize);
 		[NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.05]];
 	}   
 
-    //5) Enter main run loop (which will call MyInputCallback when data has come back from the device):
-    
-    //[[NSRunLoop mainRunLoop] run];
-    
-    
+   
     
     [pool drain];
     return 0;
