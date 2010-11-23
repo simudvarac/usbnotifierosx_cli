@@ -24,21 +24,22 @@ int main (int argc, const char * argv[]) {
     const long productId = 0x1320;
     const long vendorId = 0x1294;
     size_t bufferSize = 5;
-    char *inputBuffer = malloc(bufferSize);
+    //char *inputBuffer = malloc(bufferSize);
     char *outputBuffer = malloc(bufferSize);
     memset(outputBuffer, 0, bufferSize);
-    unsigned int color = 0x01;
-    unsigned int count = 10;
+	NSMutableArray *pattern = [[NSMutableArray alloc] init];
     
-    //0) get color from command line
-    if(argc > 1){
-        color = atoi(argv[1]);
-    }
-    if(argc > 2){
-        count = 2 * atoi(argv[2]);//since half the time we're off, double the number of blinks
-    }
+    //0) get colors from command line
+	for(int i = 1; i < argc; i++){
+		[pattern addObject:[NSNumber numberWithInt:atoi(argv[i])]];
+	}
     
-
+	/*  
+     *
+     * This code borrows heavily (pretty much completely) from http://osdir.com/ml/usb/2009-09/msg00019.html 
+     *
+     */
+	
     //1) Setup your manager and schedule it with the main run loop:
     
     IOHIDManagerRef managerRef = IOHIDManagerCreate(kCFAllocatorDefault,
@@ -70,20 +71,11 @@ int main (int argc, const char * argv[]) {
     // populate output buffer
     // ....
    
-    if(count > 0){
-        for(int i = 0; i < count; i++){
-            if(i % 2 == 0){
-                outputBuffer[0] = color;
-            }else{
-                outputBuffer[0] = 0x00;
-            }
-            sendRet = IOHIDDeviceSetReport(deviceRef, kIOHIDReportTypeOutput, 0, (uint8_t *)outputBuffer, bufferSize);
-            [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
-        }
-    }else{
-        outputBuffer[0] = color;
-        sendRet = IOHIDDeviceSetReport(deviceRef, kIOHIDReportTypeOutput, 0, (uint8_t *)outputBuffer, bufferSize);
-    }
+	for (NSNumber *n in [pattern objectEnumerator]){
+		outputBuffer[0] = [n integerValue];
+		sendRet = IOHIDDeviceSetReport(deviceRef, kIOHIDReportTypeOutput, 0, (uint8_t *)outputBuffer, bufferSize);
+		[NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.05]];
+	}   
 
     //5) Enter main run loop (which will call MyInputCallback when data has come back from the device):
     
